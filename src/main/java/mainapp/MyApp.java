@@ -1,6 +1,7 @@
 // Main application file for "Git Revert the Changes" project
 package mainapp;
 
+import java.util.regex.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -35,17 +36,25 @@ public class MyApp {
         }
     }
 
-    // Method to check if revert was successful
+    // Method to check if any commit contains "Revert" in the commit message
     public static String revertSuccess() {
-        String revertSuccess;
+        String commitLog;
         try {
-            System.out.println("Checking if the last commit was reverted successfully...");
-            revertSuccess = executeCommand("git log --oneline -n 1").trim(); // Adjusted to ensure only the latest commit is fetched
-            System.out.println("Latest commit: " + revertSuccess);
-            // Check if the latest commit message contains the word "Revert"
-            if (revertSuccess.toLowerCase().contains("revert")) {
+            System.out.println("Checking if any commit has 'Revert' in the message...");
+            // Fetch the complete commit log
+            commitLog = executeCommand("git log --oneline").trim();
+            System.out.println("Commit log: " + commitLog);
+
+            // Compile a pattern to search for the word "Revert" (case-insensitive)
+            Pattern revertPattern = Pattern.compile("Revert", Pattern.CASE_INSENSITIVE);
+            Matcher revertMatcher = revertPattern.matcher(commitLog);
+
+            // Check if any commit message contains "Revert"
+            if (revertMatcher.find()) {
+                System.out.println("A commit with 'Revert' was found.");
                 return "true";
             } else {
+                System.out.println("No commit with 'Revert' found.");
                 return "false";
             }
         } catch (Exception e) {

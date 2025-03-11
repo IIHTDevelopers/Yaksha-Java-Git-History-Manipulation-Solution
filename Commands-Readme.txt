@@ -2,19 +2,16 @@
 
   mvn clean install exec:java -Dexec.mainClass="mainapp.MyApp" -DskipTests=true
 
-
-
-
 git init
-<add line in Assessment.txt file>
-git add Assessment.txt
-git config --global user.email ""
-git config --global user.name ""
-git commit -m "first commit"
-<add line in Assessment.txt file>
-git add Assessment.txt
-git commit -m "first commit"
+create utils folder
+create Assessment.txt file inside utils
+add line "This is the first line." in Assessment.txt
+add line "This is the second line." int Assessment.txt
+git add .
+git commit -m "Added second line"
 git revert HEAD --no-edit
-
-
-
+create utils folder
+create Assessment.txt file inside utils
+add line "This is the third line." in Assessment.txt
+git add .
+git commit -m "Added third line"
